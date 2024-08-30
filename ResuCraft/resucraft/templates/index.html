@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enhanced Animated Homepage</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        poppins: ['Poppins', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        html {
+    scroll-behavior: smooth;
+}
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+        .animate-float {
+            animation: float 3s ease-in-out infinite;
+        }
+        @keyframes slideInLeft {
+            from { transform: translateX(-100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        .animate-slideInLeft {
+            animation: slideInLeft 1s ease-out forwards;
+        }
+        @keyframes slideInRight {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        .animate-slideInRight {
+            animation: slideInRight 1s ease-out forwards;
+        }
+        @keyframes countUp {
+        from {
+            transform: translateY(100%);
+        }
+        to {
+            transform: translateY(0);
+        }
+    }
+
+    .count-up > span {
+        animation: countUp 2s ease-out forwards;
+    }
+
+    .count-up[data-count="500"] > span { animation-duration: 2.5s; }
+    .count-up[data-count="100"] > span { animation-duration: 2s; }
+    .count-up[data-count="50"] > span { animation-duration: 1.5s; }
+    .count-up[data-count="10"] > span { animation-duration: 1s; }
+
+    /*main section*/
+    @keyframes typing {
+    from { width: 0 }
+    to { width: 100% }
+}
+
+@keyframes blink-caret {
+    from, to { border-color: transparent }
+    50% { border-color: white; }
+}
+
+.typewriter {
+    overflow: hidden;
+    border-right: .15em solid white;
+    white-space: nowrap;
+    margin: 0 auto;
+    letter-spacing: .06em;
+    animation: 
+        typing 3.5s steps(40, end),
+        blink-caret .75s step-end infinite;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.animate-fadeIn {
+    animation: fadeIn 1s ease-in forwards;
+    animation-delay: 3.5s;
+}
+
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+    100% { transform: translateY(0px); }
+}
+
+.animate-float {
+    animation: float 6s ease-in-out infinite;
+}
+
+/*login button*/
+    </style>
+</head>
+<body class="font-poppins bg-gradient-to-br from-purple-400 to-indigo-600 min-h-screen flex flex-col">
+    <header class="bg-white bg-opacity-0 py-4 px-6 fixed w-full z-50">
+        <nav class="flex justify-center items-center">
+          <div class="w-full md:w-4/5 bg-white bg-opacity-20 rounded-full shadow-lg p-6 flex flex-col md:flex-row md:items-center justify-between transition-all duration-500">
+            <a href="#" class="text-white text-2xl font-bold hover:text-purple-200 transition duration-300">ResuMate</a>
+            <button id="menu-button" class="text-white focus:outline-none hover:text-purple-200 transition duration-300 md:hidden">
+              <svg class="w-6 h-6 animate-spin-slow hover:animate-none" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+              </svg>
+            </button>
+            <ul class="hidden md:flex space-x-6 items-center">
+              <li><a href="{% url 'index' %} class="text-white hover:text-purple-200 transition duration-300">Home</a></li>
+              <li><a href="{% url 'about' %}" class="text-white hover:text-purple-200 transition duration-300">About</a></li>
+              <li><a href="{% url 'templates' %}" class="text-white hover:text-purple-200 transition duration-300">Resume Templates</a></li>
+              <li><a href="{% url 'contact' %}" class="text-white hover:text-purple-200 transition duration-300">Contact</a></li>
+              <li>
+                {% if user.is_authenticated %}
+                <button class="bg-green-600 text-white px-6 py-2 rounded-full font-bold tracking-wide shadow-lg transition duration-500 transform hover:scale-110 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:ring-opacity-50 animate-slideInRight">
+                  <a href="{% url 'logout_view' %}">Logout</a>
+                  </button>
+                {% else %}</li>
+              <li><button type="button" class="bg-green-600 text-white px-6 py-2 rounded-full font-bold tracking-wide shadow-lg transition duration-500 transform hover:scale-110 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:ring-opacity-50 animate-slideInRight">
+                  <a href="{% url 'login' %}">Login</a>
+                </button>
+              </li>  
+              {% endif %}
+            </ul>
+          </div>
+        </nav>
+      </header>
+      
+      <script>
+        document.getElementById('menu-button').addEventListener('click', function() {
+          const menu = document.querySelector('header nav ul');
+          if(menu.classList.contains('hidden')){
+            menu.classList.remove('hidden');
+            menu.classList.add('animate-slide-in');
+          } else {
+            menu.classList.add('hidden');
+            menu.classList.remove('animate-slide-in');
+          }
+        });
+      </script>
+      
+      
+
+    <main class="min-h-screen flex items-center justify-center px-4 pt-20  bg-gradient-to-br from-purple-600 to-indigo-800 relative overflow-hidden">
+        <!-- 3D background -->
+        <div class="absolute inset-0 z-0">
+            <div class="absolute inset-0 bg-[url('https://assets.codepen.io/721952/grid.svg')] bg-center [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))]"></div>
+        </div>
+    
+        <div class="container mx-auto w-full z-10">
+            <div class="flex flex-col md:flex-row items-center justify-between">
+                <!-- Text content -->
+                <div class="md:w-1/2 text-left mb-8 md:mb-0 md:pr-8">
+                    <h1 class="text-3xl md:text-5xl font-bold text-white mb-6 typewriter">
+                        Welcome to ResuMate
+                    </h1>
+                    <p class="text-xl md:text-2xl text-purple-200 mb-8 opacity-0 animate-fadeIn">
+                        Discover amazing features and services
+                    </p>
+                    <a href="{% url 'login' %}" class="inline-block bg-white text-purple-600 px-8 py-3 rounded-full text-lg font-semibold hover:bg-purple-100 transition duration-300 transform hover:scale-105">
+                        Get Started
+                    </a>
+                </div>
+                <!-- Image -->
+                <div class="md:w-1/2 flex justify-end md:-mr-16">
+                    <img src="https://doodleipsum.com/700/flat?i=7e83ba77e602c180346437548c5df08e" alt="ResuMate" class="rounded-lg animate-fade-in-left">
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <section class="py-16 px-4">
+        <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="bg-white bg-opacity-10 backdrop-blur-md p-6 rounded-lg text-white text-center transform hover:scale-105 transition duration-300 animate-float">
+                <h3 class="text-2xl font-semibold mb-4">Make your Resumes here</h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            </div>
+            <div class="bg-white bg-opacity-10 backdrop-blur-md p-6 rounded-lg text-white text-center transform hover:scale-105 transition duration-300 animate-float" style="animation-delay: 0.5s;">
+                <h3 class="text-2xl font-semibold mb-4">Rank your resume among competition</h3>
+                <p>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+            </div>
+            <div class="bg-white bg-opacity-10 backdrop-blur-md p-6 rounded-lg text-white text-center transform hover:scale-105 transition duration-300 animate-float" style="animation-delay: 1s;">
+                <h3 class="text-2xl font-semibold mb-4">Search for Talent</h3>
+                <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p>
+            </div>
+        </div>
+    </section>
+
+<!-- New About Us section with sliding animations -->
+<section class="py-24 px-4 bg-white bg-opacity-10 backdrop-blur-md">
+    <div class="max-w-6xl mx-auto">
+        <div class="flex flex-col md:flex-row items-center justify-between gap-12">
+            <div class="md:w-1/2 space-y-6 opacity-0 animate-slideInLeft" style="animation-delay: 0.5s;">
+                <h2 class="text-4xl font-bold text-white">About Us</h2>
+                <p class="text-purple-200 text-lg leading-relaxed">
+                    We are a passionate team dedicated to creating amazing experiences for our users. With years of expertise and a commitment to innovation, we strive to deliver the best solutions for your needs.
+                </p>
+                <a href="#" class="inline-block bg-purple-600 text-white py-3 px-6 rounded-full font-semibold hover:bg-purple-700 transition duration-300">Learn More</a>
+            </div>
+            <div class="md:w-1/2 opacity-0 animate-slideInRight" style="animation-delay: 1s;">
+                <img src="https://doodleipsum.com/700/flat?i=c70e819a616f734883c0337c204f791a" alt="About Us" class="rounded-lg shadow-xl w-full h-auto">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Team Section -->
+<section class="py-24 px-4 bg-gradient-to-r from-purple-500 to-indigo-600">
+    <div class="max-w-6xl mx-auto">
+      <h2 class="text-4xl font-bold text-white text-center mb-12">Meet Our Team</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
+        <!-- Team Member 1 -->
+        <div class="bg-white bg-opacity-10 backdrop-blur-md rounded-lg overflow-hidden transform hover:scale-105 transition duration-300">
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQua_KERdgmz3R-fPSz9NSvhQWOpOkraO41Mw&s" alt="Team Member 1" class="w-full h-64 object-cover">
+          <div class="p-6">
+            <h3 class="text-xl font-semibold text-white mb-2">Aari Eswar</h3>
+            <p class="text-purple-200">Chief Executive Officer</p>
+          </div>
+        </div>
+        <!-- Team Member 2 -->
+        <div class="bg-white bg-opacity-10 backdrop-blur-md rounded-lg overflow-hidden transform hover:scale-105 transition duration-300 md:translate-y-8">
+          <img src="https://jntukucev.hosting2.acm.org/wp-content/uploads/2023/05/srikarsecretary-209x300.jpeg" alt="Team Member 2" class="w-full h-64 object-cover">
+          <div class="p-6">
+            <h3 class="text-xl font-semibold text-white mb-2">Jaya Sai Srikar</h3>
+            <p class="text-purple-200">Chief Technical Officer</p>
+          </div>
+        </div>
+        <!-- Team Member 3 -->
+        <div class="bg-white bg-opacity-10 backdrop-blur-md rounded-lg overflow-hidden transform hover:scale-105 transition duration-300">
+          <img src="https://source.unsplash.com/300x300/?woman" alt="Team Member 3" class="w-full h-64 object-cover">
+          <div class="p-6">
+            <h3 class="text-xl font-semibold text-white mb-2">Harsha Vivek Gangadhar</h3>
+            <p class="text-purple-200">Lead Developer</p>
+          </div>
+        </div>
+        <!-- Team Member 4 -->
+        <div class="bg-white bg-opacity-10 backdrop-blur-md rounded-lg overflow-hidden transform hover:scale-105 transition duration-300 md:translate-y-8">
+            <img src="https://media.licdn.com/dms/image/D5603AQFxuH4lcMDNkg/profile-displayphoto-shrink_200_200/0/1683195826147?e=2147483647&v=beta&t=Ucf8y4ZJInG1SvEpG-SxgYFvHDQV1bX1wMMvEA269dk" alt="Team Member 4" class="w-full h-64 object-cover">
+            <div class="p-6">
+              <h3 class="text-xl font-semibold text-white mb-2">Bhavani Balijireddi</h3>
+              <p class="text-purple-200">Chief Technical Officer</p>
+            </div>
+          </div>
+      </div>
+    </div>
+  </section>
+
+  
+  
+  <!-- Services Showcase -->
+  <section class="py-24 px-4">
+    <div class="max-w-6xl mx-auto">
+      <h2 class="text-4xl font-bold text-white text-center mb-12">Our Services</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+        <!-- Service 1 -->
+        <div class="bg-white bg-opacity-10 backdrop-blur-md p-8 rounded-lg transform hover:scale-105 transition duration-300">
+          <div class="flex items-center mb-4">
+            <div class="bg-purple-500 p-3 rounded-full mr-4">
+              <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+            </div>
+            <h3 class="text-2xl font-semibold text-white">Web Development</h3>
+          </div>
+          <p class="text-purple-200">We create stunning, responsive websites tailored to your needs.</p>
+        </div>
+        <!-- Service 2 -->
+        <div class="bg-white bg-opacity-10 backdrop-blur-md p-8 rounded-lg transform hover:scale-105 transition duration-300 md:translate-y-12">
+          <div class="flex items-center mb-4">
+            <div class="bg-indigo-500 p-3 rounded-full mr-4">
+              <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"></path></svg>
+            </div>
+            <h3 class="text-2xl font-semibold text-white">UI/UX Design</h3>
+          </div>
+          <p class="text-purple-200">We craft intuitive and visually appealing user interfaces.</p>
+        </div>
+        <!-- Service 3 -->
+        <div class="bg-white bg-opacity-10 backdrop-blur-md p-8 rounded-lg transform hover:scale-105 transition duration-300">
+          <div class="flex items-center mb-4">
+            <div class="bg-pink-500 p-3 rounded-full mr-4">
+              <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+            </div>
+            <h3 class="text-2xl font-semibold text-white">Digital Marketing</h3>
+          </div>
+          <p class="text-purple-200">We boost your online presence and drive targeted traffic to your site.</p>
+        </div>
+        <!-- Service 4 -->
+        <div class="bg-white bg-opacity-10 backdrop-blur-md p-8 rounded-lg transform hover:scale-105 transition duration-300 md:translate-y-12">
+          <div class="flex items-center mb-4">
+            <div class="bg-yellow-500 p-3 rounded-full mr-4">
+              <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+            </div>
+            <h3 class="text-2xl font-semibold text-white">Analytics & SEO</h3>
+          </div>
+          <p class="text-purple-200">We optimize your site for search engines and provide data-driven insights.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Contact Form -->
+  <section class="py-24 px-4 bg-white bg-opacity-10 backdrop-blur-md">
+    <div class="max-w-4xl mx-auto">
+      <h2 class="text-4xl font-bold text-white text-center mb-12">Get In Touch</h2>
+      <form class="space-y-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div>
+            <label for="name" class="block text-sm font-medium text-purple-200 mb-2">Name</label>
+            <input type="text" id="name" name="name" class="w-full bg-white bg-opacity-20 border-0 rounded-md py-3 px-4 text-white placeholder-purple-300 focus:ring-2 focus:ring-purple-400 focus:outline-none" placeholder="Your Name">
+          </div>
+          <div>
+            <label for="email" class="block text-sm font-medium text-purple-200 mb-2">Email</label>
+            <input type="email" id="email" name="email" class="w-full bg-white bg-opacity-20 border-0 rounded-md py-3 px-4 text-white placeholder-purple-300 focus:ring-2 focus:ring-purple-400 focus:outline-none" placeholder="your@email.com">
+          </div>
+        </div>
+        <div>
+          <label for="message" class="block text-sm font-medium text-purple-200 mb-2">Message</label>
+          <textarea id="message" name="message" rows="4" class="w-full bg-white bg-opacity-20 border-0 rounded-md py-3 px-4 text-white placeholder-purple-300 focus:ring-2 focus:ring-purple-400 focus:outline-none" placeholder="Your message here..."></textarea>
+        </div>
+        <div class="text-center">
+          <button type="submit" class="bg-purple-600 text-white py-3 px-8 rounded-full font-semibold hover:bg-purple-700 transition duration-300 transform hover:scale-105">Send Message</button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+<!-- New Testimonials section with carousel -->
+<section class="py-16 px-4">
+    <h2 class="text-4xl font-bold text-white text-center mb-12">What Our Clients Say</h2>
+    <div class="max-w-6xl mx-auto">
+        <div class="swiper-container">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide px-4">
+                    <div class="bg-white bg-opacity-10 backdrop-blur-md p-8 rounded-lg shadow-xl">
+                        <svg class="w-12 h-12 text-purple-400 mb-6" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
+                        </svg>
+                        <p class="text-white text-xl mb-6">"Absolutely amazing service! I couldn't be happier with the results. The team's professionalism and expertise exceeded my expectations."</p>
+                        <div class="flex items-center">
+                            <img src="https://doodleipsum.com/700/avatar?i=f859cefbfe6dc6acca9189a5e2c4af0c" alt="John Doe" class="w-12 h-12 rounded-full mr-4">
+                            <div>
+                                <p class="text-white font-semibold">John Doe</p>
+                                <p class="text-purple-300">CEO, TechCorp</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-slide px-4">
+                    <div class="bg-white bg-opacity-10 backdrop-blur-md p-8 rounded-lg shadow-xl">
+                        <svg class="w-12 h-12 text-purple-400 mb-6" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
+                        </svg>
+                        <p class="text-white text-xl mb-6">"The team's creativity and attention to detail blew me away. They transformed our vision into reality with stunning precision."</p>
+                        <div class="flex items-center">
+                            <img src="https://doodleipsum.com/700/avatar?i=df724d7c95f42ff94943275dcdcbacfc" alt="Jane Smith" class="w-12 h-12 rounded-full mr-4">
+                            <div>
+                                <p class="text-white font-semibold">Jane Smith</p>
+                                <p class="text-purple-300">Marketing Director, InnovateCo</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-slide px-4">
+                    <div class="bg-white bg-opacity-10 backdrop-blur-md p-8 rounded-lg shadow-xl">
+                        <svg class="w-12 h-12 text-purple-400 mb-6" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
+                        </svg>
+                        <p class="text-white text-xl mb-6">"Professional, responsive, and incredibly skilled. Their expertise significantly improved our project outcomes. Highly recommended!"</p>
+                        <div class="flex items-center">
+                            <img src="https://doodleipsum.com/700/avatar-4?i=2c0a40183a5fc9f604e32f78e45895b1" alt="Mike Johnson" class="w-12 h-12 rounded-full mr-4">
+                            <div>
+                                <p class="text-white font-semibold">Mike Johnson</p>
+                                <p class="text-purple-300">CTO, FutureTech</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="swiper-pagination mt-8"></div>
+        </div>
+    </div>
+</section>
+
+<!-- New animated statistics section -->
+<section class="py-16 px-4 bg-white bg-opacity-10 backdrop-blur-md">
+    <div class="max-w-6xl mx-auto">
+        <h2 class="text-4xl font-bold text-white text-center mb-12">Our Impact</h2>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div class="text-center">
+                <span class="text-5xl font-bold text-white mb-2 inline-block count-up" data-count="500">
+                    <span class="inline-block w-full overflow-hidden">500</span>
+                </span>
+                <p class="text-purple-200">Happy Clients</p>
+            </div>
+            <div class="text-center">
+                <span class="text-5xl font-bold text-white mb-2 inline-block count-up" data-count="100">
+                    <span class="inline-block w-full overflow-hidden">100</span>
+                </span>
+                <p class="text-purple-200">Projects Completed</p>
+            </div>
+            <div class="text-center">
+                <span class="text-5xl font-bold text-white mb-2 inline-block count-up" data-count="50">
+                    <span class="inline-block w-full overflow-hidden">50</span>
+                </span>
+                <p class="text-purple-200">Team Members</p>
+            </div>
+            <div class="text-center">
+                <span class="text-5xl font-bold text-white mb-2 inline-block count-up" data-count="10">
+                    <span class="inline-block w-full overflow-hidden">10</span>
+                </span>
+                <p class="text-purple-200">Years of Experience</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer class="bg-white bg-opacity-10 backdrop-blur-md py-4 px-6">
+    <div class="max-w-6xl mx-auto text-center text-white">
+        <p>&copy; 2024 Your Company. All rights reserved.</p>
+    </div>
+</footer>
+
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+<script>
+    // Initialize Swiper
+    new Swiper('.swiper-container', {
+        loop: true,
+        autoplay: {
+            delay: 5000,
+        },
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+        },
+    });
+// Function to animate counting up
+function animateCountUp(el) {
+        const final = parseInt(el.getAttribute('data-count'));
+        const duration = 2000; // 2 seconds
+        const step = (final / duration) * 10; // Update every 10ms
+        let current = 0;
+        const timer = setInterval(() => {
+            current += step;
+            if (current > final) {
+                clearInterval(timer);
+                current = final;
+            }
+            el.textContent = Math.round(current);
+        }, 10);
+    }
+
+    // Intersection Observer to trigger animation when element is in view
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+                const countElements = entry.target.querySelectorAll('.count-up');
+                countElements.forEach(animateCountUp);
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.5 });
+
+    // Observe the statistics section
+    const statsSection = document.querySelector('.grid');
+    observer.observe(statsSection);
+</script>
+</body>
+</html>
